@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
 import openai
+import logging
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 
-# Masukkan API Key OpenAI Anda
-openai.api_key = "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"
+# Masukkan API Key OpenAI
+openai.api_key = "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"  # Ganti dengan API Key Anda
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -13,13 +17,13 @@ def chat():
         data = request.json
         user_message = data.get('message', '')
 
-        # Validasi jika pesan kosong
+        # Validasi input
         if not user_message:
             return jsonify({"error": "Message field is required"}), 400
 
-        # Panggil OpenAI Chat API
+        # Panggil OpenAI API
         response = openai.ChatCompletion.acreate(
-            model="gpt-3.5-turbo",  # Anda juga bisa menggunakan model "gpt-4"
+            model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": user_message}]
         )
 
@@ -28,7 +32,8 @@ def chat():
         return jsonify({"reply": chatbot_reply}), 200
 
     except Exception as e:
-        # Tangani error dan kirimkan respons ke klien
+        # Log error untuk debugging
+        logging.error(f"Error processing request: {e}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
