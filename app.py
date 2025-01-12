@@ -10,7 +10,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 # Masukkan API Key Anda (bisa langsung atau dari environment variables)
-openai.api_key = "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"  # Ganti dengan API Key Anda
+openai.api_key = "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"  # Ganti dengan API Key Anda
 
 # Endpoint '/chat' untuk menerima permintaan POST
 @app.route('/chat', methods=['POST'])
