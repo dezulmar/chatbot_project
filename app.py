@@ -14,10 +14,10 @@ def chat():
         user_message = data.get('message', '')
 
         # Panggil API ChatGPT untuk mendapatkan respons
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": user_message}]
-        )
+    response = openai.ChatCompletion.acreate(
+    model="gpt-3.5-turbo",
+    messages=[{"role": "user", "content": "Hello"}]
+)
 
         # Ambil respons dari ChatGPT
         chatbot_reply = response['choices'][0]['message']['content']
