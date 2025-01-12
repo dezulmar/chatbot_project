@@ -9,21 +9,26 @@ openai.api_key = "sk-proj-jcIyw-fopg9dlM6g72V7eZ_KyNq_QWTZKD8V4QE6NZjx3rLsAoNI6X
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
-        # Ambil pesan dari body permintaan
+        # Ambil data JSON dari permintaan
         data = request.json
         user_message = data.get('message', '')
 
-        # Panggil API ChatGPT untuk mendapatkan respons
-    response = openai.ChatCompletion.acreate(
-    model="gpt-3.5-turbo",
-    messages=[{"role": "user", "content": "Hello"}]
-)
+        # Validasi jika pesan kosong
+        if not user_message:
+            return jsonify({"error": "Message field is required"}), 400
+
+        # Panggil OpenAI Chat API
+        response = openai.ChatCompletion.acreate(
+            model="gpt-3.5-turbo",  # Anda juga bisa menggunakan model "gpt-4"
+            messages=[{"role": "user", "content": user_message}]
+        )
 
         # Ambil respons dari ChatGPT
         chatbot_reply = response['choices'][0]['message']['content']
         return jsonify({"reply": chatbot_reply}), 200
 
     except Exception as e:
+        # Tangani error dan kirimkan respons ke klien
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
