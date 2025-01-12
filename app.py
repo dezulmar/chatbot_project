@@ -6,7 +6,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 # Set API Key
-openai.api_key = "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"
+openai.api_key = OPENAI_API_KEY
 
 @app.route('/chat', methods=['POST'])
 def chat():
